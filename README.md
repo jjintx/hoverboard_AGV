@@ -12,7 +12,7 @@ Teniendo esto en cuenta, el proyecto a desarrollar parte de varios elementos ini
 
 - Hoverboard: 
 
-![Hoverboard, controlador PWM y Arduino](https://github.com/IgorIrastorza/hoverboard_AGV/blob/master/media/Hoverboard.jpg)
+![Hoverboard, controlador PWM y Arduino](https://github.com/IgorIrastorza/hoverboard_AGV/blob/44bb1ae847d0f8a0b10358670d9ccf6c0886eff9/media/Hoverboard.jpg)
 
 - dfsdf
 
