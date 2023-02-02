@@ -30,7 +30,7 @@ El caso base del proyecto era conseguir primeramente controlar el hoverboard al 
 - **Arduino - Placa base del hoverboard**: esta conexión debería ser realizada mediante el puerto serial del Arduino, que envía el input de la velocidad y dirección para que finalmente el microcontrolador del patinete lo convierta en señales PWM al motor. La comunicación mediante el puerto serie para este patinete en concreto debe ser en formato string con la estructura `[dirección, velocidad]`, donde la dirección tiene un rango de (-1000, 1000) y la velocidad (-250, 250).
 - **Arduino - Controladores PWM - Motores**: también existe la posibilidad de saltarse la placa del hoverboard y conectar las señales directamente al motor, utilizando para ello los microcontroladores PWM RioRand mencionados anteriormente. Esto podría realizarse utilizando 2 pines que admitan PWM en el Arduino, conectando cada salida al microcontrolador (habría 2, uno para cada motor), y finalmente el motor al microcontrolador. A continuación se detallan las entradas/salidas del controlador PWM utilizado en clase:
 
-![Entradas/Salidas microcontrolador motor PWM RioRand 400W 6-60V PWM DC](https://github.com/IgorIrastorza/hoverboard_AGV/blob/96be8f06ed8653b7e883ac898e369ca5069f0c5f/media/arduino_nano_33_ble_sense.jpg)
+![Entradas/Salidas microcontrolador motor PWM RioRand 400W 6-60V PWM DC](https://github.com/IgorIrastorza/hoverboard_AGV/blob/17901050c4b418338189f64e204adf3f368de21d/media/EE_PWM_RioRand.jpg)
 
 ## Caso adaptado
 
