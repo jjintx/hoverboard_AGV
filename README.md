@@ -32,7 +32,12 @@ El caso base del proyecto era conseguir primeramente controlar el hoverboard al 
 
 ![Entradas/Salidas microcontrolador motor PWM RioRand 400W 6-60V PWM DC](https://github.com/IgorIrastorza/hoverboard_AGV/blob/17901050c4b418338189f64e204adf3f368de21d/media/EE_PWM_RioRand.jpg)
 
+No obstante, un percance con la batería del hoverboard, que no hacía llegar la corriente necesaria en intensidad para hacer mover los motores correctamente, sumado al tiempo limitado de las clases (6 días), nos obligó a desarrollar una alternativa que fuera viable en un espacio de tiempo tan corto.
+
 ## Caso adaptado
+Ante la negativa de encontrar alguna alternativa para suministrar la corriente necesaria a los motores del hoverboard, la alternativa desarrollada se ha basado en sustituir los motores del hoverboard por un sencillo servomotor.
+
+![Servomotor estandar MG996R](https://github.com/IgorIrastorza/hoverboard_AGV/blob/17901050c4b418338189f64e204adf3f368de21d/media/EE_PWM_RioRand.jpg)
 
 ### Archivo CAD
 
