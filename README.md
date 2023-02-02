@@ -155,7 +155,7 @@ No obstante, un percance con la batería del hoverboard, que no hacía llegar la
 ## Caso adaptado
 Ante la negativa de encontrar alguna alternativa para suministrar la corriente necesaria a los motores del hoverboard, la alternativa desarrollada se ha basado en sustituir los motores del hoverboard por un sencillo servomotor.
 
-![Servomotor estandar MG996R](https://github.com/IgorIrastorza/hoverboard_AGV/blob/17901050c4b418338189f64e204adf3f368de21d/media/EE_PWM_RioRand.jpg)
+![Servomotor estandar MG996R](https://github.com/IgorIrastorza/hoverboard_AGV/blob/3992450b49c1ca5266d7ec051343d350a34fb1b0/media/servo_MG996R.jpg)
 
 ### Archivo CAD
 
