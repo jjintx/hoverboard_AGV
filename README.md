@@ -1,4 +1,5 @@
 # ENTREGABLE PROYECTO HOVERBOARD - AGV
+
 En el siguiente repositorio se resume la entrega grupal realizada para la asignatura de Tecnologías Industriales del máster en Fabricación Digital, impartido en IMH por Tecnalia.
 
 El proyecto trata de construir y controlar un robot que sea capaz de operar de una manera autónoma, así como poder realizar una captura de datos de sensores para finalmente ser visualizado en un dashboard.
@@ -75,17 +76,74 @@ const int PIN_DIR_L = 9;
 - **Función setup para definir los parámetros de las variables de los controles de los servos.**
 
 ```
+void setup()
+```
+
+```
 #if (OPENBOT == RC_CAR)
-// Se modelan los parámetros para las variables de control ESC Y SERVO y sus correspondientes pines
+// Se modelan los parámetros para las variables de control ESC Y SERVO y sus correspondientes pines.
   pinMode(PIN_PWM_T, OUTPUT);
   pinMode(PIN_PWM_S, OUTPUT);
-  // Función 'attach' para asignar las variables de control del servo a las variables que guardan los pines correspondientes (A0, A1)
-  // También define los siguientes parámetros de control PWM: mínimo y máximo del ancho de pulso, en microsegundos
+  // Función 'attach' para asignar las variables de control del servo a las variables que guardan los pines correspondientes (A0, A1).
+  // También define los siguientes parámetros de control PWM: mínimo y máximo del ancho de pulso, en microsegundos.
   ESC.attach(PIN_PWM_T, 1000, 2000);   // (pin, min pulse width, max pulse width in microseconds)
   SERVO.attach(PIN_PWM_S, 1000, 2000); // (pin, min pulse width, max pulse width in microseconds)
+```
+- **Función para el control de los dos motores del hoverboard.**
+
+```
+void update_vehicle()
+// Función que transforma los datos de input de la aplicación y algoritmo de Openbot (conducción autónoma)...
+// ...en output para definir los parámetros de funcionamiento de los 2 motores.
+{
+#if (OPENBOT == RC_CAR)
+  //update_throttle();
+  //update_steering();
+  motors_v2();
+```
 
 ```
 
+void motors_v2()
+// Las variables de entrada son: ctrl_left y ctrl_right.
+// El valor de estas 2 variables depende del algoritmo de IA que intenta seguir a la persona mediante la app y la cámara del smartphone.
+// Dependiendo de a donde quiera ir el robot, variará el valor de ctrl_left y ctrl_right.
+{
+  if(ctrl_left<0 && ctrl_right<0)
+  // La función digitalWrite y el HIGH/LOW se utilizan para definir el sentido de giro del motor.
+    {
+      digitalWrite(PIN_PWM_T, HIGH);
+      digitalWrite(PIN_PWM_S, HIGH);
+    }
+  else if(ctrl_left<0 && ctrl_right>0)
+    {
+      digitalWrite(PIN_PWM_T, LOW);
+      digitalWrite(PIN_PWM_S, HIGH);
+    }
+  else if(ctrl_left>0 && ctrl_right<0)
+    {
+      digitalWrite(PIN_PWM_T, HIGH);
+      digitalWrite(PIN_PWM_S, LOW);
+    }
+   else if(ctrl_left>0 && ctrl_right>0)
+    {
+      digitalWrite(PIN_PWM_T, LOW);
+      digitalWrite(PIN_PWM_S, LOW);
+    }
+  // La función .write, que es parte de la librería 'Servo.h', tiene como input el valor de la velocidad para el servo definido en la variable (ESC Y SERVO).
+  // La función .write, junto con el resto de funciones de la librería 'Servo.h', realizará a posteriori la conversión a parámetros que un motor tipo PWM pueda procesar.
+  // En este caso, dependiendo de la magnitud de las variables de entrada(ctrl_left, ctrl_right), la velocidad asignada a cada motor será directamente proporcional.
+  ESC.write(fabs(ctrl_left));
+  SERVO.write(fabs(ctrl_right));
+}
+
+```
+---------------------
+**COSAS PENDIENTES**
+- ES NECESARIO EL CONTROLADOR PWM EN EL CASO BASE?
+- HACER ESQUEMA OPENBOT-ARDUINO-MOTORES EN PPT.
+
+------------------------------------------------------
 
 
 
