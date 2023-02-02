@@ -18,9 +18,9 @@ Teniendo esto en cuenta, el proyecto a desarrollar parte de varios elementos ini
 
 ![Arduino Nano 33 BLE Sense](https://github.com/IgorIrastorza/hoverboard_AGV/blob/96be8f06ed8653b7e883ac898e369ca5069f0c5f/media/arduino_nano_33_ble_sense.jpg)
 
-- **Openbot**: 
+- **Openbot**: Es un proyecto maker y de código abierto desarrollado por Mathias Müller y Vladlen Koltun, que trata de convertir los smartphones que la mayoria de las persona dispone hoy en día en robots. Para ello, han desarrollado una aplicación movil con varias funciones: control manual del robot, identificación y seguimiento de personas (mediante IA) para el control automático de personas, lectura de sensores y cámaras... Además, también han desarrollado un programa Arduino para varios tipos de controles de motores y robots, con el que poder hacer el 'puente' entre el smartphone y el robot/motores.
 
-- **Microcontrolador motor PWM RioRand 400W 6-60V PWM DC**: 
+- **Microcontrolador motor PWM RioRand 400W 6-60V PWM DC**: es un controlador para motores que trabajan mediante PWM, que en este caso permitiría conectar el Arduino directamente al motor (pin PWM-microcontrolador PWM), sin tener que pasar por la placa base del hoverboard (la conexión seria mediante serial).
 
 
 ## Caso base
