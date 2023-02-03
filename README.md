@@ -37,6 +37,8 @@ En este caso, la alternativa desarrollada y programada ha sido la segunda, la cu
 
 ### Archivo CAD
 
+### Aplicación Openbot para SO Android
+
 ### Código de programación en Arduino
 La mayoria de las lineas de código utilizadas derivan del programa original creado por Mathias Müller y Vladlen Koltun. Se puede revisar y descargar el código fuente y la bibliografía del proyecto original en el siguiente [enlace](https://github.com/isl-org/OpenBot).
 
@@ -144,6 +146,9 @@ void motors_v2()
 **COSAS PENDIENTES**
 - ES NECESARIO EL CONTROLADOR PWM EN EL CASO BASE?
 - HACER ESQUEMA OPENBOT-ARDUINO-MOTORES EN PPT.
+- CAD.
+- Explicar apartado app Openbot.
+- Explicar apartado monit. datos.
 
 ------------------------------------------------------
 
@@ -164,11 +169,23 @@ A continuación se detalla todo el proceso seguido para testear el código desar
 El primer paso ha sido realizar todo el cableado y las conexiones entre el smartphone, el arduino y el servomotor. Para ello, se ha dispuesto de soldador automático de estaño, así como todo el cableado necesario.
 
 En el siguiente esquema se resumen las conexiones realizadas, donde se visualiza lo siguiente:
-- Alimentación de 5v del servomotor.
+- Alimentación de 5V del servomotor. En la realidad fue realizado utilizando la corriente de una salida USB de un ordenador portatil.
 - Tierra o GND tanto del servomotor como del arduino.
 - Pin PWM del arduino (A0 en este caso) conectado al cable amarillo del servo para el control de posición del motor.
-- Alimentación 
+- Alimentación del arduino mediante la entrada USB/serial, que está conectada a un smartphone (no es posible visualizarlo en el esquema eléctrico debido a limitaciones de software).
+- Comunicación via puerto serial con el smartphone, para poder recibir toda la información de la aplicación Openbot y los algoritmos de control del robot que se ejecutan en el terminal (no es posible visualizarlo en el esquema eléctrico debido a limitaciones de software).
 
+![Esquema eléctrico](https://github.com/IgorIrastorza/hoverboard_AGV/blob/3866a8efe609d6766f5d04f69e32774e34f25686/media/EE_OpenBot-Arduino-Servo.jpg)
+
+Si se dispone del software Fritzing, es posible abrir directamente el esquema eléctrico, que se encuentra disponible en el repositorio del presente proyecto, en la carpeta `esquemas_electricos`.
+
+Para finalizar con el apartado, se muestran varias imagenes de como quedaron las conexiones anteriormente detalladas en la realidad:
+
+![Conexiones test 1](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_1.jpg)
+
+![Conexiones test 2](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_2.jpg)
+
+![Conexiones test 3](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_3.jpg)
 ### Código de programación en Arduino
 
 ### Test y Resultados
