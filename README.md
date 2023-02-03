@@ -35,6 +35,8 @@ El caso base del proyecto era conseguir primeramente controlar el hoverboard al 
 
 En este caso, la alternativa desarrollada y programada ha sido la segunda, la cual se resume a continuación:
 
+### Archivo CAD
+
 ### Código de programación en Arduino
 La mayoria de las lineas de código utilizadas derivan del programa original creado por Mathias Müller y Vladlen Koltun. Se puede revisar y descargar el código fuente y la bibliografía del proyecto original en el siguiente [enlace](https://github.com/isl-org/OpenBot).
 
@@ -146,20 +148,26 @@ void motors_v2()
 ------------------------------------------------------
 
 
-
 ### Test y Resultados
+El siguiente paso lógico del proyecto hubiera sido realizar un test físico del programa, cableando para ello las conexiones necesarias entre la aplicación Openbot (smartphone), Arduino y el hoverboard.
 
-
-No obstante, un percance con la batería del hoverboard, que no hacía llegar la corriente necesaria en intensidad para hacer mover los motores correctamente, sumado al tiempo limitado de las clases (6 días), nos obligó a desarrollar una alternativa que fuera viable en un espacio de tiempo tan corto.
+No obstante, un percance con la batería del hoverboard, que no hacía llegar el voltaje y la intensidad necesaria para hacer mover los motores correctamente, sumado al tiempo limitado de las clases (6 días), nos obligó a desarrollar una alternativa que fuera viable en un espacio de tiempo tan corto.
 
 ## Caso adaptado
-Ante la negativa de encontrar alguna alternativa para suministrar la corriente necesaria a los motores del hoverboard, la alternativa desarrollada se ha basado en sustituir los motores del hoverboard por un sencillo servomotor.
+Ante la negativa de encontrar alguna alternativa para suministrar la corriente necesaria a los motores del hoverboard, la opción desarrollada se ha basado en sustituir los motores del hoverboard por un sencillo servomotor. Al contrario que los motores del hoverboard, este servomotor solo necesita una alimentación de 5V, que puede ser obtenida de una salida USB de cualquier ordenador.
 
 ![Servomotor estandar MG996R](https://github.com/IgorIrastorza/hoverboard_AGV/blob/3992450b49c1ca5266d7ec051343d350a34fb1b0/media/servo_MG996R.jpg)
 
-### Archivo CAD
+A continuación se detalla todo el proceso seguido para testear el código desarrollado en arduino para integrarse con la aplicación móvil Openbot.
 
 ### Esquema eléctrico
+El primer paso ha sido realizar todo el cableado y las conexiones entre el smartphone, el arduino y el servomotor. Para ello, se ha dispuesto de soldador automático de estaño, así como todo el cableado necesario.
+
+En el siguiente esquema se resumen las conexiones realizadas, donde se visualiza lo siguiente:
+- Alimentación de 5v del servomotor.
+- Tierra o GND tanto del servomotor como del arduino.
+- Pin PWM del arduino (A0 en este caso) conectado al cable amarillo del servo para el control de posición del motor.
+- Alimentación 
 
 ### Código de programación en Arduino
 
