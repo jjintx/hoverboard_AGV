@@ -856,7 +856,7 @@ float get_voltage()
 
 void update_vehicle()
 // Función que transforma los datos de input de la aplicación y algoritmo de Openbot (conducción autónoma)...
-//...en output para definir los parámetros de funcionamiento de los 2 motores.
+//...en output para definir los parámetros de funcionamiento de los 2 motores (que irán al microcontrolador PWM-BLDC).
 {
 #if (OPENBOT == RC_CAR)
   //update_throttle();
@@ -926,6 +926,7 @@ void motors_v2()
     }
   // La función .write, que es parte de la librería 'Servo.h', tiene como input el valor de la velocidad para el servo definido en la variable (ESC Y SERVO).
   // La función .write, junto con el resto de funciones de la librería 'Servo.h', realizará a posteriori la conversión a parámetros que un motor tipo PWM pueda procesar.
+  // La señal PWM llegará al microcontrolador PWM-BLDC, que finalmente mandará la señal a los motores BLDC del hoverboard.
   // En este caso, dependiendo de la magnitud de las variables de entrada(ctrl_left, ctrl_right), la velocidad asignada a cada motor será directamente proporcional.
   ESC.write(fabs(ctrl_left));
   SERVO.write(fabs(ctrl_right));
