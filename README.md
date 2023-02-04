@@ -220,7 +220,7 @@ No obstante, siendo conocedores de las limitaciones del servo estandar utilizado
 ### Test y Resultados
 Por tanto, el test se ha limitado a validar que todas las comunicaciones entre el smartphone, arduino y servomotor son realizadas correctamente, así como que el algoritmo de redes neuronales ejecutado en el smartphone es capaz de detectar personas y mandar inputs de ordenes para el movimiento de los motores al arduino.
 
-En conclusión, los resultados del test han sido un exito, consiguiendo que el servo responda y se mueva ante los movimientos que detecta la aplicación Openbot a traves de la cámara del smartphone donde se ejecuta el programa. En los siguientes enlaces se pueden descargar los 2 videos de los test realizados:
+En conclusión, los resultados del test han sido un exito, consiguiendo que el servo responda y se mueva ante los movimientos de personas que detecta la aplicación Openbot a traves de la cámara del smartphone donde se ejecuta el programa. En los siguientes enlaces se pueden descargar los 2 videos de los test realizados:
 
 - [Video 1](https://github.com/IgorIrastorza/hoverboard_AGV/blob/ddbe54801d81005c55cb873a7e9e9c9af46892c5/media/video_test1.mp4).
 - [Video 2](https://github.com/IgorIrastorza/hoverboard_AGV/blob/ddbe54801d81005c55cb873a7e9e9c9af46892c5/media/video_test2.mp4).
