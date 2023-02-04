@@ -202,7 +202,7 @@ Para finalizar con el apartado, se muestran varias imagenes de como quedaron las
 ![Conexiones test 3](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_3.jpg)
 
 ### Código de programación en Arduino
-La principal diferencia entre los motores del hoverboard (BLDC) y el servomotor estandar utilizado en el test reside en que el primero es un servo de rotación continua (gracias al microcontrolador utulizado), en el que la señal que se envía al microcontrolador controla la velocidad de giro. Al contrario, en el servo utilizado en el test (servo convencional), la señal que se envía al servo controla la posición angular, que viene dada en grados.
+La principal diferencia entre los motores del hoverboard (BLDC) y el servomotor estandar utilizado en el test reside en que el primero es un servo de rotación continua (gracias al microcontrolador utilizado), en el que la señal que se envía al microcontrolador controla la velocidad de giro. Al contrario, en el servo utilizado en el test (servo convencional), la señal que se envía al servo controla la posición angular, que viene dada en grados.
 
 Es por ello que, en la función desarrollada `void motors_v2()`, el valor de lo que las funciones `.write()` reciben como input pasará de ser velocidad a ser posición angular del servo.
 ```
@@ -214,7 +214,7 @@ Como todo el código esta pensado para que el valor recibido en la función `.wr
 
 Además, al haber conectado solo un pin al servo (A0 en este caso), solo funcionará la variable de servo `ESC`, que está asignada a la variable de pin `PIN_PWM_T`.
 
-No obstante, siendo conocedores de las limitaciones del servo estandar utilizado, se ha decidido no realizar ninguna modificación al programa arduino elaborado inicialmente, ya que supondría modificar toda la lógica tanto del código de la app móvil como la del arduino. Esta decisión se basa en que, por una parte, el objetivo final del proyecto (aunque al final sea tratado en este trabajo) es que el código funcione en el hoverboard, y no en un servo estandar. Por ello, las pruebas se destinarán a confirmar en que las comunicaciones se realizan correctamente entre los distintos elementos y que la aplicación móvil Openbot funciona correctamente.
+No obstante, siendo conocedores de las limitaciones del servo estandar utilizado, se ha decidido no realizar ninguna modificación al programa arduino elaborado inicialmente, ya que supondría modificar toda la lógica tanto del código de la app móvil como la del arduino. Esta decisión se basa en que el objetivo final del proyecto (aunque al final sea tratado en este trabajo) es que el código funcione en el hoverboard, y no en un servo estandar. Por ello, las pruebas se destinarán a confirmar en que las comunicaciones se realizan correctamente entre los distintos elementos y que la aplicación móvil Openbot funciona correctamente.
 
 
 ### Test y Resultados
