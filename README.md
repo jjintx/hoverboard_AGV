@@ -36,10 +36,30 @@ El caso base del proyecto era conseguir primeramente controlar el hoverboard al 
 En este caso, la alternativa desarrollada y programada ha sido la segunda, la cual se resume a continuación:
 
 ### Archivo CAD
+El primer desarrollo realizado en el proyecto ha sido el diseño 3D del ensamblaje entre el robot y el hoverboard. El archivo del diseño se encuentra en la carpeta `CAD` del presente repositorio, donde se encuentra un archivo `.stp` para poder abrir el ensamblaje en cualquier software PLM, así como los archivos originales guardados en una carpeta comprimida, en caso de que se disponga de Solid Edge.
 
+No obstante, a continuación se incluye una imagen del diseño final de todo el ensamblaje:
 ![Ensamblaje final hoverboard-robot](https://github.com/IgorIrastorza/hoverboard_AGV/blob/8469123b8340d215dc03ad8fbfe5a40f8fd55d9a/media/ensamblaje_robot_hoverboard.jpg)
 
+Como se puede observar en la anterior imagen, los principales componentes son los siguientes:
+- **Hoverboard**.
+- **Base inferior del hoverboard**: se encuentra ensamblado al hoverboard y es la estructura principal del robot.
+- **Base superior del hoverboard**: soporte para todos los elementos auxiliares (seta, soportes, arduino, ruedas...).
+- **Seta de emergencia**: posibilita la parada total del robot, en caso de haber algún incidente. 
+- **Soporte arduino**: estructura de apoyo del arduino con un agujero para la salida de todos los cables. Evitará cualquier movimiento del arduino no deseado cuando el robot esté en funcionamiento.
+- **Soporte smartphone**: estructura de apoyo para el smartphone, que permite tener una visión sin obstaculos a la cámara del móvil mientras se ejecuta la aplicación Openbot y manda datos al arduino.
+- **Ruedas delanteras**: ruedas de apoyo del robot, que disponen de libertad de movimiento en 2 ejes.
+
 ### Aplicación Openbot para SO Android
+Tal y como se ha mencionado en la introducción, una de las claves del proyecto reside en el desarrollo de la aplicación de conducción autónoma realizado por Mathias Müller y Vladlen Koltun (repositorio del proyecto y APKs de la app disponible en el siguiente [enlace](https://github.com/isl-org/OpenBot)).
+
+Aunque existen 2 aplicaciones distintas desarrolladas, este proyecto ha estado focalizado en la aplicación catalogada como `Openbot`, que incluye el módulo de conducción autónoma del robot. Se ejecuta en cualquier dispositivo móvil que cumpla los siguientes requisitos:
+- Android Studio 3.2 o superior.
+- Dispositivo Android y entorno de desarrollo Android con API 21 como mínimo.
+
+Actualmente, la app registra las lecturas de los siguientes sensores: cámara, giroscopio, acelerómetro, magnetómetro, sensor de luz ambiental y barómetro. Utilizando la API de Android, también se pueden obtener las siguientes lecturas de los sensores: imágenes RGB, velocidad angular, aceleración lineal, gravedad, intensidad del campo magnético, intensidad de la luz, presión atmosférica, latitud, longitud, altitud, rumbo y velocidad. Además de los sensores del propio smarpthone, también se registran las lecturas de los sensores del arduino (odometría de las ruedas, distancia de los obstáculos y voltaje de la batería), que se transmiten a través del puerto serial conectado al arduino y al teléfono móvil. Por último, se integran varias redes neuronales para el seguimiento de personas y la navegación autónoma, que permite convertir el movimiento de las personas en inputs a los 2 motores del hoverboard y así poder seguir a las personas de una forma autonóma.
+
+![Captura de pantalla de la app Openbot](https://github.com/isl-org/OpenBot/blob/3e5e73068f263ce32e8f4821e1b90712f1523bb4/docs/images/screen_default.jpg)
 
 ### Código de programación en Arduino
 La mayoria de las lineas de código utilizadas derivan del programa original creado por Mathias Müller y Vladlen Koltun. Se puede revisar y descargar el código fuente y la bibliografía del proyecto original en el siguiente [enlace](https://github.com/isl-org/OpenBot).
