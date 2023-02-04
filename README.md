@@ -228,4 +228,169 @@ En conclusión, los resultados del test han sido un exito, consiguiendo que el s
 
 ## Captura y monitorización de datos
 
+## Captura de datos
+
+La estructura de captura de datos propuesta se basa en generar registros discretos de datos que serán leidos periodicamente.  Para esto en primer luegar se tiene un programa (.ino) que se carga en arduino y que permite que este lea desde los sensores de:
+
+- Sensor de presión: LPS22HB barometrico con rango de medición entre 260 to 1260 hPa. 
+
+- Unidad de medición inercial LSM9DS1 que tiene un acelerómetro,  giroscopio y magnetómetro 3D que permiten detectar la orientación, el movimiento o las vibraciones en el proyecto.
+
+El primer paso es inicializar una conexión serial entre el sensor y el Arduino para enviar los datos leídos, la comunicación entre el Arduino y los sensores se establece en 9600 baud según lo que se indica en los ejemplos establecidos para cada librería. Posterior a esto, se inicializan los sensores y se crean las variables que almacenaran los valores leídos desde los sensores. 
+
+```
+#include <Arduino_LSM9DS1.h>
+#include <Arduino_LPS22HB.h>
+
+void setup(){
+	Serial.begin(9600); 
+	
+	while (!Serial) {
+		; //Espera hasta que el monitor conecte
+	}
+	// Inicializar IMU
+	if (!IMU.begin()) { 
+		Serial.println("Fallo al inicializar IMU!");
+		while (1);
+	}
+	
+	//Inicializar el sensor de presión
+	if (!BARO.begin()) { 
+		Serial.println("Fallo al iniciar el sensor de presión!");
+		while (1);
+	}
+
+	float accel_x, accel_y, accel_z;
+	float gyro_x, gyro_y, gyro_z;
+	float mag_x, mag_y, mag_z;
+	float Pressure;
+
+	void loop() {
+	
+	// Valores captados por el acelerometro
+	if (IMU.accelerationAvailable()) {
+		IMU.readAcceleration(accel_x, accel_y, accel_z);
+	}
+	
+	// Valores captados por el giroscopio
+	if (IMU.gyroscopeAvailable()) {
+	IMU.readGyroscope(gyro_x, gyro_y, gyro_z);
+	}
+	
+	// Valores captados por el magnetometro
+	if (IMU.magneticFieldAvailable()) {
+		IMU.readMagneticField(mag_x, mag_y, mag_z);
+	}
+
+	// Valores captados por el sensor de presión	
+	Pressure = BARO.readPressure();
+}
+```
+
+Finalmente, se agregará un retraso de 1 segundo con la función ```delay()``` para permitir una lectura adecuada. Es importante destacar que este valor se puede modificar de acuerdo a la frecuencia de medición que usuario deseé. 
+
+Una vez que se tiene la rutina cargada en el arduino y este enviado datos, se utilizan dos fichero python que permiten leerlos directamente desde el puerto serial y almacenarlos. Para este último paso, dentro de la lógica se ha incluido una variable con la cual el usuario puede controlar cuantos registros necesita. A continuación se explica de forma detallada la estructura y funcionamiento de cada programa realizado con Python. 
+
+1. serialExcel.py: 
+
+En este fichero se crea una clase que tendrá como objetivo leer los valores que el arduino esta tomando del sensor y posteriormente comunicando via puerto serie. Para  el uso de esta libreria será necesario contar con:
+
+| Libreria | Comando            |
+| -------- | ------------------ |
+| serial   | pip install pyserial |
+| xlwt     | pip install xlwt   |
+
+En primer lugar se crea la clase ```SerialExcel()```, a la cual se le ingresara como paramétros de entradas las siguientes variables: 
+
+- puerto: Variable en la cual se debe almacenar en formato texo el puerto serie al cual se ha conectado el arduino.
+
+- velocidad: Variable numerica en la cual se debe indicar el baud rate con el que el arduino se esta comunicando con el sensor
+
+Mediante la libreria "xlwt" se crea un "Workbook de excel" con la hoja "Datos" y una primera columna "Fecha Hora". 
+
+```
+class SerialExcel:
+	def __init__(self,puerto,velocidad):
+		self.puerto = puerto
+		self.velocidad = velocidadself.wb = xlwt.Workbook()
+		self.ws = self.wb.add_sheet("Datos",cell_overwrite_ok=True)
+		self.columns = ["Fecha Hora"]
+		self.number = 100
+```
+
+Posteriormente se crean dos funciones bajo las cuales se configuraran las columnas que deberá tener el archivo y la cantidad de registros que queremos leer. 
+
+```
+def setColumns(self,col):
+	self.columns.extend(col)
+	
+def setRecordsNumber(self,number):
+	self.number = number
+```
+
+Finalmente, una tercera y cuarta función donde la primera es utilizada para configurar la carga y el formato del registro leido desde el puerto serie, y la última para escribir y guardar el excel en la ruta desde donde se ejecutarán los ficheros. 
+```
+def readPort(self):
+ser = serial.Serial(self.puerto, self.velocidad, timeout=1)
+	c = 0
+		for col in self.columns:
+		self.ws.write(1, c, col)
+		c = c + 1
+	self.fila = 2
+	
+	i = 0
+	while(i<self.number):
+		line = str(ser.readline())
+		if(len(line) > 0):
+			now = datetime.now()
+			date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+			line = line.strip('\r\n')
+			print(date_time,line)
+			if(line.find(",")):
+				c = 1
+				self.ws.write(self.fila, 0, date_time)
+				columnas = line.split(",")
+				for col in columnas:
+					self.ws.write(self.fila, c, col)
+					c = c + 1
+			i = i + 1
+			self.fila = self.fila + 1
+```
+
+2. lectura.py:
+
+A partir de la importación del fichero anterior, se realiza una llamada a la clase SerialExcel() donde se le debe indicar el puerto y el baud rate configurado.
+```
+from serialExcel import SerialExcel
+
+# Indicar Puerto serie de conexión y baud rate
+puerto = "COM17"
+baud = 9600
+
+serialExcel = SerialExcel(puerto,baud)
+```
+
+En segundo lugar se debe indicar, las columnas y el número de datos que se quiere registrar. 
+```
+columnas = ["Nro Lectura","Valor"]
+serialExcel.setColumns(["Nro Lectura","Valor"])
+serialExcel.setRecordsNumber(10)
+```
+
+Finalmente, se utiliza el comando ```.readport()``` creado en la clase ```SerialExcel()``` para iniciar la lectura y luego crear el archivo excel. 
+```
+serialExcel.readPort()
+serialExcel.writeFile("DataImportada.xls")
+```
+
 ## Conclusiones y líneas futuras
+
+Respecto a la metodología planteada para la captura y almacenamiento de datos, es posible concluir lo siguiente:
+
+- Se ha desarrollado una lógica sencilla y funcional de leer los datos que el arduino pueda transmitir de forma discreta y con una priodicidad configurable por el usuario. 
+
+- La metodología es sencillad de implementar y no se requieren conocimientos avanzados para reconfigurar si se quiere variar la frecuencia de captura.
+
+- Los datos son almacenados en ficheros excel que son facilmente explotables para obtener información relevante a partir de ellos. 
+
+- Si bien actualmente no se plantea una visualización en línea de los registros, es posible conseguirlo modificando el código y por ejemplo, generar un programa que lea constantemente los datos que estan entrando y los suba directo a una base de datos. Para esto se debe tener en consideración, la frecuencia con la que se reciben los datos y cada cuanto tiempo el programa python deberá captarlos. 
