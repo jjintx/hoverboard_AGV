@@ -11,7 +11,7 @@ El desarrollo del presente proyecto se enmarca dentro de la asignatura de Tecnol
 
 Teniendo esto en cuenta, el proyecto a desarrollar parte de varios elementos iniciales con los que hemos contado todos los equipos:
 
-- **Hoverboard**: es una plataforma con dos ruedas y dos espacios para poner los pies, que funciona con dos motores, un microcontrolador, diversos sensores y una batería recargable de litio.
+- **Hoverboard**: es una plataforma con dos ruedas y dos espacios para poner los pies, que funciona con dos motores tipo BLDC, un microcontrolador, diversos sensores y una batería recargable de litio.
 
 ![Hoverboard, controlador PWM y Arduino](https://github.com/IgorIrastorza/hoverboard_AGV/blob/44bb1ae847d0f8a0b10358670d9ccf6c0886eff9/media/Hoverboard.jpg)
 
@@ -21,7 +21,7 @@ Teniendo esto en cuenta, el proyecto a desarrollar parte de varios elementos ini
 
 - **Openbot**: Es un proyecto maker y de código abierto desarrollado por Mathias Müller y Vladlen Koltun, que trata de convertir los smartphones que la mayoria de las personas dispone hoy en día en robots. Para ello, han desarrollado una aplicación movil con varias funciones: control manual del robot, identificación y seguimiento de personas (mediante IA) para el control automático de robots, lectura de sensores y cámaras... Además, también han desarrollado un programa Arduino para varios tipos de controles de motores y robots, con el que poder hacer el 'puente' entre el smartphone y el robot/motores. Se puede revisar y descargar el código fuente y la bibliografía del proyecto original en el siguiente [enlace](https://github.com/isl-org/OpenBot).
 
-- **Microcontrolador motor PWM RioRand 400W 6-60V PWM DC**: es un controlador para motores que trabaja mediante PWM, que en este caso permitiría conectar el Arduino directamente al motor (pin PWM Arduino - microcontrolador PWM - Motor), sin tener que pasar por la placa base del hoverboard (la conexión sería mediante serial).
+- **Microcontrolador motor PWM RioRand 400W 6-60V PWM DC**: es un controlador para motores que sirve para controlar motores BLDC. Recibiría como input las señales PWM que generá el arduino, para después convertirlo en señales que un motor BLDC pueda entender. Por lo tanto, permitiría conectar el Arduino directamente al motor (pin PWM Arduino - microcontrolador motor - motor), sin tener que pasar por la placa base del hoverboard (en ese caso la conexión sería mediante serial).
 
 - **Ordenador portatil y smartphone**: tal y como se puede intuir, también hemos dispuesto de ordenadores portatiles y smartphones para poder desarrollar y desplegar toda el software y hardware anteriormente mencionado.
 
@@ -29,14 +29,16 @@ Teniendo esto en cuenta, el proyecto a desarrollar parte de varios elementos ini
 El caso base del proyecto era conseguir primeramente controlar el hoverboard al completo de forma remota, utilizando para ello la aplicación RemoTv o el mismo Openbot a traves del smartphone. Estas comunicaciones podían ser realizadas de la siguiente manera:
 
 - **Arduino - Placa base del hoverboard**: esta conexión debería ser realizada mediante el puerto serial del Arduino, que envía el input de la velocidad y dirección para que finalmente el microcontrolador del patinete lo convierta en señales PWM al motor. La comunicación mediante el puerto serie para este patinete en concreto debe ser en formato string con la estructura `[dirección, velocidad]`, donde la dirección tiene un rango de (-1000, 1000) y la velocidad (-250, 250).
-- **Arduino - Controladores PWM - Motores**: también existe la posibilidad de saltarse la placa del hoverboard y conectar las señales directamente al motor, utilizando para ello los microcontroladores PWM RioRand mencionados anteriormente. Esto podría realizarse utilizando 2 pines que admitan PWM en el Arduino, conectando cada salida al microcontrolador (habría 2, uno para cada motor), y finalmente el motor al microcontrolador. A continuación se detallan las entradas/salidas del controlador PWM utilizado en clase:
+- **Arduino - Controladores PWM - Motores**: también existe la posibilidad de saltarse la placa del hoverboard y conectar las señales directamente al motor, utilizando para ello los microcontroladores PWM RioRand mencionados anteriormente. Esto podría realizarse utilizando 2 pines que admitan PWM en el Arduino, conectando cada salida al microcontrolador (habría 2, uno para cada motor), y finalmente el motor al microcontrolador. A continuación se detallan las entradas/salidas del controlador de motores BLDC utilizado en clase:
 
-![Entradas/Salidas microcontrolador motor PWM RioRand 400W 6-60V PWM DC](https://github.com/IgorIrastorza/hoverboard_AGV/blob/17901050c4b418338189f64e204adf3f368de21d/media/EE_PWM_RioRand.jpg)
+![Entradas/Salidas microcontrolador motor PWM RioRand 400W 6-60V PWM DC](https://github.com/IgorIrastorza/hoverboard_AGV/blob/2b1120578f6fb78754f0188e3e4749adce3b9bf5/media/EE_PWM_RioRand.jpg)
 
-En este caso, la alternativa desarrollada y programada ha sido la segunda, la cual se resume a continuación:
+En este caso, la alternativa desarrollada y programada ha sido la segunda, la cual se resume en el siguiente esquema:
+
+![Esquema general de conexiones y elementos](https://github.com/IgorIrastorza/hoverboard_AGV/blob/f74daef4899eb014989c7d621eb3241a21e47f3d/media/esquema_conexiones.jpg)
 
 ### Archivo CAD
-El primer desarrollo realizado en el proyecto ha sido el diseño 3D del ensamblaje entre el robot y el hoverboard. El archivo del diseño se encuentra en la carpeta `CAD` del presente repositorio, donde se encuentra un archivo `.stp` para poder abrir el ensamblaje en cualquier software PLM, así como los archivos originales guardados en una carpeta comprimida, en caso de que se disponga de Solid Edge.
+El primer desarrollo realizado en el proyecto, antes de entar de lleno en la programación, ha sido el diseño 3D del ensamblaje entre el robot y el hoverboard. El archivo del diseño se encuentra en la carpeta `CAD` del presente repositorio, donde se encuentra un archivo `.stp` para poder abrir el ensamblaje en cualquier software PLM, así como los archivos originales guardados en una carpeta comprimida, en caso de que se disponga de Solid Edge.
 
 No obstante, a continuación se incluye una imagen del diseño final de todo el ensamblaje:
 ![Ensamblaje final hoverboard-robot](https://github.com/IgorIrastorza/hoverboard_AGV/blob/8469123b8340d215dc03ad8fbfe5a40f8fd55d9a/media/ensamblaje_robot_hoverboard.jpg)
@@ -57,7 +59,7 @@ Aunque existen 2 aplicaciones distintas desarrolladas, este proyecto ha estado f
 - Android Studio 3.2 o superior.
 - Dispositivo Android y entorno de desarrollo Android con API 21 como mínimo.
 
-Actualmente, la app registra las lecturas de los siguientes sensores: cámara, giroscopio, acelerómetro, magnetómetro, sensor de luz ambiental y barómetro. Utilizando la API de Android, también se pueden obtener las siguientes lecturas de los sensores: imágenes RGB, velocidad angular, aceleración lineal, gravedad, intensidad del campo magnético, intensidad de la luz, presión atmosférica, latitud, longitud, altitud, rumbo y velocidad. Además de los sensores del propio smarpthone, también se registran las lecturas de los sensores del arduino (odometría de las ruedas, distancia de los obstáculos y voltaje de la batería), que se transmiten a través del puerto serial conectado al arduino y al teléfono móvil. Por último, se integran varias redes neuronales para el seguimiento de personas y la navegación autónoma, que permite convertir el movimiento de las personas en inputs a los 2 motores del hoverboard y así poder seguir a las personas de una forma autonóma.
+Actualmente, la app registra las lecturas de los siguientes sensores: cámara, giroscopio, acelerómetro, magnetómetro, sensor de luz ambiental y barómetro. Utilizando la API de Android, también se pueden obtener las siguientes lecturas de los sensores: imágenes RGB, velocidad angular, aceleración lineal, gravedad, intensidad del campo magnético, intensidad de la luz, presión atmosférica, latitud, longitud, altitud, rumbo y velocidad. Además de los sensores del propio smarpthone, también se registran las lecturas de los sensores del arduino (odometría de las ruedas, distancia de los obstáculos y voltaje de la batería), que se transmiten a través del puerto serial conectado al arduino y al teléfono móvil. Por último, se integran varios algoritmos de redes neuronales para el seguimiento de personas y la navegación autónoma, que permite convertir el movimiento de las personas en inputs a los 2 motores del hoverboard y así poder seguir a las personas de una forma autonóma.
 
 ![Captura de pantalla de la app Openbot](https://github.com/isl-org/OpenBot/blob/3e5e73068f263ce32e8f4821e1b90712f1523bb4/docs/images/screen_default.jpg)
 
@@ -164,17 +166,6 @@ void motors_v2()
 }
 
 ```
----------------------
-**COSAS PENDIENTES**
-- ES NECESARIO EL CONTROLADOR PWM EN EL CASO BASE?
-- HACER ESQUEMA OPENBOT-ARDUINO-MOTORES EN PPT.
-- CAD.
-- Explicar apartado app Openbot.
-- Explicar apartado monit. datos.
-
-------------------------------------------------------
-
-
 ### Test y Resultados
 El siguiente paso lógico del proyecto hubiera sido realizar un test físico del programa, cableando para ello las conexiones necesarias entre la aplicación Openbot (smartphone), Arduino y el hoverboard.
 
@@ -208,12 +199,31 @@ Para finalizar con el apartado, se muestran varias imagenes de como quedaron las
 ![Conexiones test 2](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_2.jpg)
 
 ![Conexiones test 3](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_3.jpg)
+
 ### Código de programación en Arduino
-LA PRINCIPAL DIFERENCIA RESIDE EN LOS VALORES DE ENVIO AL SERVO MEDIANTE LA FUNCIÓN X.WRITE(). AL SER SERVO SENCILLO, EL VALOR ES IGUAL AL ANGULO DE POSICIÓN, Y NO LA VELOCIDAD.
-https://arduinogetstarted.com/es/reference/library/servo-attach
+La principal diferencia entre los motores del hoverboard y el servomotor estandar utilizado en el test reside en que el primero es un servo de rotación continua, en el que la señal que se envía al microcontrolador-servo controla la velocidad de giro. Al contrario, en el servo utilizado en el test (servo convencional), la señal que se envía al servo controla la posición angular, que viene dada en grados.
+
+Es por ello que, en la función desarrollada `void motors_v2()`, el valor de lo que las funciones `.write()` reciben como input pasará de ser velocidad a ser posición angular del servo.
+```
+  ESC.write(fabs(ctrl_left));
+  SERVO.write(fabs(ctrl_right));
+
+```
+
+Además, al haber conectado solo un pin al servo (A0 en este caso), solo funcionará la variable de servo `ESC`, que está asignada a la variable de pin `PIN_PWM_T`.
+
+No obstante, siendo conocedores de las limitaciones del servo estandar utilizado, se ha decidido no realizar ninguna modificación al programa arduino elaborado inicialmente, ya que supondría modificar toda la lógica tanto del código de la app móvil como la del arduino. Esta decisión se basa en que, por una parte, el objetivo final del proyecto (aunque al final sea tratado en este trabajo) es que el código funcione en el hoverboard, y no en un servo estandar. Por ello, las pruebas se destinarán a confirmar en que las comunicaciones se realizan correctamente entre los distintos elementos y que la aplicación móvil Openbot funciona correctamente.
+
 
 ### Test y Resultados
+Por tanto, el test se ha limitado a validar que todas las comunicaciones entre el smartphone, arduino y servomotor son realizadas correctamente, así como que el algoritmo de redes neuronales ejecutado en el smartphone es capaz de detectar personas y mandar inputs de ordenes para el movimiento de los motores al arduino.
 
+En conclusión, los resultados del test han sido un exito, consiguiendo que el servo responda ante los movimientos que detecta la aplicación Openbot a traves de la cámara del smartphone donde se ejecuta el programa. En los siguientes enlaces se pueden descargar los 2 videos de los test realizados:
+
+- [Video 1](https://github.com/IgorIrastorza/hoverboard_AGV/blob/ddbe54801d81005c55cb873a7e9e9c9af46892c5/media/video_test1.mp4).
+- [Video 2](https://github.com/IgorIrastorza/hoverboard_AGV/blob/ddbe54801d81005c55cb873a7e9e9c9af46892c5/media/video_test2.mp4).
 
 
 ## Captura y monitorización de datos
+
+## Conclusiones y líneas futuras
