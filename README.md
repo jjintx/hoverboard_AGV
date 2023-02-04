@@ -37,6 +37,8 @@ En este caso, la alternativa desarrollada y programada ha sido la segunda, la cu
 
 ### Archivo CAD
 
+![Ensamblaje final hoverboard-robot](https://github.com/IgorIrastorza/hoverboard_AGV/blob/8469123b8340d215dc03ad8fbfe5a40f8fd55d9a/media/ensamblaje_robot_hoverboard.jpg)
+
 ### Aplicación Openbot para SO Android
 
 ### Código de programación en Arduino
@@ -187,6 +189,8 @@ Para finalizar con el apartado, se muestran varias imagenes de como quedaron las
 
 ![Conexiones test 3](https://github.com/IgorIrastorza/hoverboard_AGV/blob/765d9a26d44badcaf252b4b7a6609b94b7feed6a/media/EE_test_3.jpg)
 ### Código de programación en Arduino
+LA PRINCIPAL DIFERENCIA RESIDE EN LOS VALORES DE ENVIO AL SERVO MEDIANTE LA FUNCIÓN X.WRITE(). AL SER SERVO SENCILLO, EL VALOR ES IGUAL AL ANGULO DE POSICIÓN, Y NO LA VELOCIDAD.
+https://arduinogetstarted.com/es/reference/library/servo-attach
 
 ### Test y Resultados
 
